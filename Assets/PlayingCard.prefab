@@ -284,8 +284,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a1f76759d55374583ed6594ae7b9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frontSide: {fileID: 8914898601643197081}
+  cardSet: {fileID: 11400000, guid: 88d5da2cdd39b4346a1dbabfa3855e6e, type: 2}
   suit: 0
-  number: 0
+  number: 1
 --- !u!54 &8914898603653194547
 Rigidbody:
   m_ObjectHideFlags: 0

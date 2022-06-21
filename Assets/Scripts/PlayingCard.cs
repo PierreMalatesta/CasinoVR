@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayingCard : MonoBehaviour
 {
-
+    public MeshRenderer frontSide;
+    Material cardMaterial;
+    public CardSet cardSet;
     public enum Suit
     {
         Clubs, 
@@ -20,14 +22,16 @@ public class PlayingCard : MonoBehaviour
     void Start()
     {
         UpdateImage();
+        cardMaterial = GetComponent<Material>();
     }
 
     void UpdateImage()
     {
-        // get the meshrenderer for the front quad
 
-        // query our scriptable obvject for the correct texture
+        // query our scriptable object for the correct texture
+        Texture texture = cardSet.GetCardTexture(suit, number);
 
         // set the texture
+        frontSide.material.SetTexture("_BaseMap", texture);
     }
 }
