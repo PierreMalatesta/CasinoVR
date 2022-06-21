@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8914898601643197087}
   - component: {fileID: 8914898601643197082}
   - component: {fileID: 8914898601643197081}
-  - component: {fileID: 8914898601643197080}
   - component: {fileID: 8914898601643197083}
   m_Layer: 7
   m_Name: Front
@@ -83,20 +82,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8914898601643197080
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8914898601643197086}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!65 &8914898601643197083
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -151,7 +136,6 @@ GameObject:
   - component: {fileID: 8914898602070539757}
   - component: {fileID: 8914898602070539752}
   - component: {fileID: 8914898602070539759}
-  - component: {fileID: 8914898602070539758}
   m_Layer: 7
   m_Name: Back
   m_TagString: Untagged
@@ -222,20 +206,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8914898602070539758
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8914898602070539756}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8914898603653194544
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,6 +218,7 @@ GameObject:
   - component: {fileID: 8914898603653194545}
   - component: {fileID: 8914898603653194547}
   - component: {fileID: 8914898603653194509}
+  - component: {fileID: 306873483086484225}
   m_Layer: 7
   m_Name: PlayingCard
   m_TagString: Untagged
@@ -419,3 +390,16 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
   m_AttachPointCompatibilityMode: 0
+--- !u!65 &306873483086484225
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8914898603653194544}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.01}
+  m_Center: {x: 0, y: 0, z: 0}
