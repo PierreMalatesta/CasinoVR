@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CardSpawner : MonoBehaviour
 {
+
     public GameObject cardSpawnPoint;
     public GameObject card;
 
@@ -30,21 +31,35 @@ public class CardSpawner : MonoBehaviour
         SpawnCards();
     }
 
-    void Shuffle()
+    void Shuffle(/*List<Card> deck*/)
     {
+        //makes list of cards and adds all cards and suits in order from clubs to spades
         int index = 0;
         deck = new List<Card>();
-        for (PlayingCard.Suit suit = PlayingCard.Suit.Clubs; suit <= PlayingCard.Suit.Spades; suit++)
-            for (int number = 1; number <= 13; number++)
-            {
+        //TODO Shuffle the suits
+        for (PlayingCard.Suit suit = (PlayingCard.Suit)Random.Range(0, deck.Count); suit <= PlayingCard.Suit.Spades; suit++)
+        {
+
+            //shuffle the number of the card
+            for (int number = Random.Range(0, 13); number <= 13; number++)
+            { 
                 Card card;
                 card.suit = suit;
                 card.number = number;
                 deck.Add(card);
                 index++;
-            }
 
-        // TODO shuffle
+                //TODO Shuffle the deck
+                //for (int i = deck.Count - 1; i < 0; i++)
+                //{
+                //    int randomCard = UnityEngine.Random.Range(0, i);
+                //    Card temp = deck[i];
+
+                //    deck[i] = deck[randomCard];
+                //    deck[randomCard] = temp;
+                //}
+            }
+        }
     }
 
     // Update is called once per frame
