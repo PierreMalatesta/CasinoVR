@@ -31,34 +31,35 @@ public class CardSpawner : MonoBehaviour
         SpawnCards();
     }
 
-    void Shuffle(/*List<Card> deck*/)
+    void Shuffle()
     {
         //makes list of cards and adds all cards and suits in order from clubs to spades
         int index = 0;
         deck = new List<Card>();
-        //TODO Shuffle the suits
-        for (PlayingCard.Suit suit = (PlayingCard.Suit)Random.Range(0, deck.Count); suit <= PlayingCard.Suit.Spades; suit++)
+        // create an ordered deck
+        for (PlayingCard.Suit suit = PlayingCard.Suit.Clubs; suit <= PlayingCard.Suit.Spades; suit++)
         {
 
-            //shuffle the number of the card
-            for (int number = Random.Range(0, 13); number <= 13; number++)
+            for (int number = 1 ; number <= 13; number++)
             { 
                 Card card;
                 card.suit = suit;
                 card.number = number;
                 deck.Add(card);
                 index++;
-
-                //TODO Shuffle the deck
-                //for (int i = deck.Count - 1; i < 0; i++)
-                //{
-                //    int randomCard = UnityEngine.Random.Range(0, i);
-                //    Card temp = deck[i];
-
-                //    deck[i] = deck[randomCard];
-                //    deck[randomCard] = temp;
-                //}
             }
+        }
+
+        // we now have an ordered deck. 
+        // lets shuffle it
+        //this shuffle gets two of the random cards and swaps them and it does this 1000 times
+        for (int i = 0; i < 1000; i++)
+        {
+            int index1 = Random.Range(0, deck.Count);
+            int index2 = Random.Range(0, deck.Count);
+            Card temp = deck[index1];
+            deck[index1] = deck[index2];
+            deck[index2] = temp;
         }
     }
 
