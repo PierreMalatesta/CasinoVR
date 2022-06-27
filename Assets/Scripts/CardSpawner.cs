@@ -81,7 +81,7 @@ public class CardSpawner : MonoBehaviour
     }
 
     //[ContextMenu("Spawn Card")]
-    private void SpawnCards()
+    public void SpawnCards()
     { 
         isEmpty = true;
 
