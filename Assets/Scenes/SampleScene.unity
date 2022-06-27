@@ -706,6 +706,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardSpawnPoint: {fileID: 2139269791}
   card: {fileID: 241475037}
+  isEmpty: 0
+  drawCardAction: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   deck: []
 --- !u!1 &676199831
 GameObject:
@@ -2168,6 +2170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2139269792}
+  - component: {fileID: 2139269793}
   m_Layer: 0
   m_Name: CardSpawnPoint
   m_TagString: Untagged
@@ -2189,6 +2192,19 @@ Transform:
   m_Father: {fileID: 675834640}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2139269793
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139269791}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.09573388, z: 1}
+  m_Center: {x: 0, y: 0.014378071, z: 0}
 --- !u!1001 &8914898602233702828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2215,10 +2231,6 @@ PrefabInstance:
     - target: {fileID: 8914898603653194545, guid: 70a84a837c9a7ae4980f3fa721bf3047, type: 3}
       propertyPath: number
       value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8914898603653194545, guid: 70a84a837c9a7ae4980f3fa721bf3047, type: 3}
-      propertyPath: frontSide
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8914898603653194546, guid: 70a84a837c9a7ae4980f3fa721bf3047, type: 3}
       propertyPath: m_RootOrder

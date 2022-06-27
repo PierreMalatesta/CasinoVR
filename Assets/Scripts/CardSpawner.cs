@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CardSpawner : MonoBehaviour
 {
@@ -8,8 +9,10 @@ public class CardSpawner : MonoBehaviour
     public GameObject cardSpawnPoint;
     public GameObject card;
 
-    private bool isEmpty = true;
+    public bool isEmpty = false;
     private bool isCreated;
+
+    public InputActionReference drawCardAction;
 
     [System.Serializable]
     public struct Card
@@ -24,11 +27,19 @@ public class CardSpawner : MonoBehaviour
     void Start()
     {
         Shuffle();
+        SpawnCards();
+        if (drawCardAction != null)
+            drawCardAction.action.performed += DrawCard;
+    }
+
+    public void DrawCard(InputAction.CallbackContext context)
+    {
+        SpawnCards();
     }
 
     private void OnMouseDown()
     {
-        SpawnCards();
+        //SpawnCards();
     }
 
     void Shuffle()
@@ -66,15 +77,15 @@ public class CardSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+      
     }
 
-    [ContextMenu("Spawn Card")]
+    //[ContextMenu("Spawn Card")]
     private void SpawnCards()
-    {
-        isEmpty = false; 
+    { 
+        isEmpty = true;
 
-        if (isEmpty == false)
+        if (isEmpty == true)
         {
             //spawn a new card and storing it in a local variable
             GameObject g = Instantiate(card, cardSpawnPoint.transform.position, Quaternion.Euler(-87, 270, -86));
@@ -84,11 +95,11 @@ public class CardSpawner : MonoBehaviour
             playingCard.number = deck[0].number;
             //remove the top card from the deck
             deck.RemoveAt(0);
-            isEmpty = true;
+            if (!cardSpawnPoint)
+                isEmpty = false;
         }
 
-        else if (isEmpty == true)
-            isCreated = false;
-
-    }    
+        else if (isEmpty == false)
+            isCreated = true;
+    }
 }
