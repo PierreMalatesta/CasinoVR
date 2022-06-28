@@ -9,7 +9,7 @@ public class DealerBrain : MonoBehaviour
     public Transform spawn1;
     public Transform spawn2;
 
-    public int cardValue = 0;
+    public int cardValue;
 
     public enum State
     {
