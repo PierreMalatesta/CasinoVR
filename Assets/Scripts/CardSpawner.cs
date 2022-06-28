@@ -12,6 +12,8 @@ public class CardSpawner : MonoBehaviour
     public bool isEmpty = false;
     private bool isCreated;
 
+    public Card currentCard;
+
     public InputActionReference drawCardAction;
 
     [System.Serializable]
@@ -42,7 +44,7 @@ public class CardSpawner : MonoBehaviour
         //SpawnCards();
     }
 
-    void Shuffle()
+    public void Shuffle()
     {
         //makes list of cards and adds all cards and suits in order from clubs to spades
         int index = 0;
