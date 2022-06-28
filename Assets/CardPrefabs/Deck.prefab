@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7464009032149896256}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7464009033034288591}
@@ -39,11 +39,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7464009032149896256}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.09573388, z: 1}
-  m_Center: {x: 0, y: 0.014378071, z: 0}
+  m_Size: {x: 1, y: 0.62719774, z: 1}
+  m_Center: {x: 0, y: -0.4541315, z: 0}
 --- !u!1 &7464009033034288595
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,7 +72,7 @@ Transform:
   m_GameObject: {fileID: 7464009033034288595}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.286, y: 0.267, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.5, y: 0.08236, z: 0.5}
   m_Children:
   - {fileID: 7464009032149896319}
   m_Father: {fileID: 0}
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardSpawnPoint: {fileID: 7464009032149896256}
-  card: {fileID: 0}
+  card: {fileID: 8914898603653194544, guid: 70a84a837c9a7ae4980f3fa721bf3047, type: 3}
   isEmpty: 0
   currentCard:
     suit: 0

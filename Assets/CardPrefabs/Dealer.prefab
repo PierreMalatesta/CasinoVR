@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  cardSpawner: {fileID: 0}
+  cardSpawner: {fileID: 7464009033034288590, guid: 08014b465de579e4f9c9ed946f6da454, type: 3}
   spawn1: {fileID: 1452667458374983469}
   spawn2: {fileID: 1452667458100863922}
   cardValue: 0

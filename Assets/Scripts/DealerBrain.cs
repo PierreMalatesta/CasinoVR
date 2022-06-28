@@ -30,7 +30,7 @@ public class DealerBrain : MonoBehaviour
 
             
             //if the two cards are equal to 21 then call fold state
-            if (cardValue <= 21)
+            if (cardValue >= 21)
             {
                 currentState = State.Fold;
             }
