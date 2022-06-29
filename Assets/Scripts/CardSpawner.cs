@@ -28,8 +28,8 @@ public class CardSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Shuffle();
-        SpawnCards();
+        //Shuffle();
+        //SpawnCards();
         if (drawCardAction != null)
             drawCardAction.action.performed += DrawCard;
     }

@@ -7,6 +7,7 @@ public class PlayingCard : MonoBehaviour
     public MeshRenderer frontSide;
     Material cardMaterial;
     public CardSet cardSet;
+
     public enum Suit
     {
         Clubs, 
@@ -33,5 +34,18 @@ public class PlayingCard : MonoBehaviour
 
         // set the texture
         frontSide.material.SetTexture("_BaseMap", texture);
+    }
+
+    public int GetCardValue()
+    {
+        //dealing with jack, queen and king
+        if (number > 10)
+            return 10;
+
+        //TODO ace sometimes equals 1
+        if (number == 1)
+            return 11;
+        
+        return number;
     }
 }
