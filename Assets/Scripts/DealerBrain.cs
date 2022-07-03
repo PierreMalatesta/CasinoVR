@@ -12,6 +12,8 @@ public class DealerBrain : MonoBehaviour
     public Transform playerSpawn1;
     public Transform playerSpawn2;
 
+    public GameObject dealerWinText;
+    public GameObject playerWinText;
 
 
     //public int cardValue;
@@ -36,6 +38,7 @@ public class DealerBrain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
     }
 
     void ChangeState(State newState)
@@ -44,7 +47,7 @@ public class DealerBrain : MonoBehaviour
 
         if (currentState == State.Dealing)
         {
-
+            //cardSpawner.SpawnCards();
             //instantiate two cards for the dealer
             SpawnBeginnerCards();
 
@@ -53,6 +56,7 @@ public class DealerBrain : MonoBehaviour
             if (GetTotalValue() >= 21)
             {
                 ChangeState(State.Fold);
+                Win();
             }
             else
             {
@@ -101,10 +105,8 @@ public class DealerBrain : MonoBehaviour
         cardSpawner.deck.RemoveAt(0);
         cardSpawner.deck.RemoveAt(0);
 
-        dealerCards.Add(_playingCard1);
-        dealerCards.Add(_playingCard2);
-
-        cardSpawner.SpawnCards();
+        playersCards.Add(_playingCard1);
+        playersCards.Add(_playingCard2);
     }
 
     public int GetTotalValue()
@@ -120,9 +122,34 @@ public class DealerBrain : MonoBehaviour
 
     void Win()
     {
+        //place some text saying wether the player has won or the dealer
         if (currentState == State.Fold)
         {
+            //TODO make it also if total value is greater than player value
+            if (GetTotalValue() == 21)
+            {
+                //if dealer gets 21 place text saying dealer wins
+                dealerWinText.SetActive(true);
+            }
+            else if (GetTotalValue() > 21)
+            {
+                //dealer loses and player wins
+                playerWinText.SetActive(true);
+            }
+        }
+    }
 
+    void Playing()
+    {
+        if (currentState == State.Play)
+        {
+            //add a function to add a card (hit) only after the player grabs a card
+            if (cardSpawner.grabCard == true)
+            {
+                //dealerCards.Add(cardSpawner.card);
+            }
+
+            //otherwise swap to fold state
         }
     }
 }

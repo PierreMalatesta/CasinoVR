@@ -12,6 +12,8 @@ public class CardSpawner : MonoBehaviour
     public bool isEmpty = false;
     private bool isCreated;
 
+    public bool grabCard = false;
+
     public Card currentCard;
 
     public InputActionReference drawCardAction;
@@ -28,8 +30,8 @@ public class CardSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Shuffle();
-        //SpawnCards();
+        Shuffle();
+        SpawnCards();
         if (drawCardAction != null)
             drawCardAction.action.performed += DrawCard;
     }
@@ -37,6 +39,7 @@ public class CardSpawner : MonoBehaviour
     public void DrawCard(InputAction.CallbackContext context)
     {
         SpawnCards();
+        grabCard = true;
     }
 
     private void OnMouseDown()
