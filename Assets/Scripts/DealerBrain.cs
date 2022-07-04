@@ -9,8 +9,12 @@ public class DealerBrain : MonoBehaviour
     public Transform spawn1;
     public Transform spawn2;
 
-    public Transform playerSpawn1;
-    public Transform playerSpawn2;
+    //public Transform playerSpawn1;
+    //public Transform playerSpawn2;
+    //public Transform playerSpawn3;
+
+    //make an array of playercardspawns
+    public Transform[] playerCardSpawns;
 
     public GameObject dealerWinText;
     public GameObject playerWinText;
@@ -26,7 +30,7 @@ public class DealerBrain : MonoBehaviour
     }
 
     List<PlayingCard> dealerCards;
-    List<PlayingCard> playersCards;
+    public List<PlayingCard> playersCards;
 
 
     // Start is called before the first frame update
@@ -91,8 +95,8 @@ public class DealerBrain : MonoBehaviour
         //deals two cards to player
         //NOTE this is adding both dealer and player cards which will always be 21
         playersCards = new List<PlayingCard>();
-        GameObject p1 = Instantiate(cardSpawner.card, playerSpawn1.transform.position, Quaternion.Euler(-87, 271, -86));
-        GameObject p2 = Instantiate(cardSpawner.card, playerSpawn2.transform.position, Quaternion.Euler(-87, 271, -86));
+        GameObject p1 = Instantiate(cardSpawner.card, playerCardSpawns[0].transform.position, Quaternion.Euler(-87, 271, -86));
+        GameObject p2 = Instantiate(cardSpawner.card, playerCardSpawns[1].transform.position, Quaternion.Euler(-87, 271, -86));
 
         PlayingCard _playingCard1 = p1.GetComponent<PlayingCard>();
         PlayingCard _playingCard2 = p2.GetComponent<PlayingCard>();
@@ -139,17 +143,26 @@ public class DealerBrain : MonoBehaviour
         }
     }
 
-    void Playing()
+    public Vector3 NextCardPos()
     {
-        if (currentState == State.Play)
-        {
-            //add a function to add a card (hit) only after the player grabs a card
-            if (cardSpawner.grabCard == true)
-            {
-                //dealerCards.Add(cardSpawner.card);
-            }
+        int nextpos = playersCards.Count - 1;
 
-            //otherwise swap to fold state
-        }
+        //TODO go to spawn 4 once player has spawned 3
+        return playerCardSpawns[nextpos].position;
     }
+
+    //void Playing()
+    //{
+    //    if (currentState == State.Play)
+    //    {
+    //        //add a function to add a card (hit) only after the player grabs a card
+    //        if (cardSpawner.grabCard == true)
+    //        {
+    //            cardSpawner.grabCard = false;
+    //            //dealerCards.Add(cardSpawner.card);
+    //        }
+
+    //        //otherwise swap to fold state
+    //    }
+    //}
 }

@@ -14,9 +14,11 @@ public class CardSpawner : MonoBehaviour
 
     public bool grabCard = false;
 
-    public Card currentCard;
+    PlayingCard holdingCard;
 
     public InputActionReference drawCardAction;
+
+    public DealerBrain dealer;
 
     [System.Serializable]
     public struct Card
@@ -31,20 +33,51 @@ public class CardSpawner : MonoBehaviour
     void Start()
     {
         Shuffle();
-        SpawnCards();
+        SpawnCard();
+        //this is equivalent to clicking the button and releasing it
         if (drawCardAction != null)
             drawCardAction.action.performed += DrawCard;
+        if (drawCardAction != null)
+            drawCardAction.action.canceled += ReleaseCard;
     }
+
+    //these two context menus are debug to draw and release card without using vr headset
+    [ContextMenu("Draw Card")]
+    void DebugDrawCard()
+    {
+        DrawCard(new InputAction.CallbackContext());
+    }
+
+    [ContextMenu("Release Card")]
+    void DebugReleaseCard()
+    {
+        ReleaseCard(new InputAction.CallbackContext());
+    }
+
 
     public void DrawCard(InputAction.CallbackContext context)
     {
-        SpawnCards();
-        grabCard = true;
+        //if we're in play mode, draw a card
+        if (dealer.currentState == DealerBrain.State.Play && grabCard == false)
+        {
+            SpawnCard();
+            grabCard = true;
+        }
     }
 
-    private void OnMouseDown()
+    // this gets called when you let go of a drawn card
+    public void ReleaseCard(InputAction.CallbackContext context)
     {
-        //SpawnCards();
+        if (grabCard == true)
+        {
+            // put it in players list
+            dealer.playersCards.Add(holdingCard);
+
+            // move it to the player's table
+            holdingCard.transform.position = dealer.NextCardPos();
+
+            grabCard = false;
+        }
     }
 
     public void Shuffle()
@@ -55,7 +88,6 @@ public class CardSpawner : MonoBehaviour
         // create an ordered deck
         for (PlayingCard.Suit suit = PlayingCard.Suit.Clubs; suit <= PlayingCard.Suit.Spades; suit++)
         {
-
             for (int number = 1 ; number <= 13; number++)
             { 
                 Card card;
@@ -77,6 +109,7 @@ public class CardSpawner : MonoBehaviour
             deck[index1] = deck[index2];
             deck[index2] = temp;
         }
+
     }
 
     // Update is called once per frame
@@ -86,7 +119,7 @@ public class CardSpawner : MonoBehaviour
     }
 
     //[ContextMenu("Spawn Card")]
-    public void SpawnCards()
+    public void SpawnCard()
     { 
         isEmpty = true;
 
@@ -102,6 +135,8 @@ public class CardSpawner : MonoBehaviour
             deck.RemoveAt(0);
             if (!cardSpawnPoint)
                 isEmpty = false;
+
+            holdingCard = playingCard;
         }
 
         else if (isEmpty == false)
