@@ -6,8 +6,10 @@ public class DealerBrain : MonoBehaviour
 {
     public State currentState;
     public CardSpawner cardSpawner;
-    public Transform spawn1;
-    public Transform spawn2;
+
+    public Transform[] dealerCardSpawns;
+    //public Transform spawn1;
+    //public Transform spawn2;
 
     //public Transform playerSpawn1;
     //public Transform playerSpawn2;
@@ -18,7 +20,10 @@ public class DealerBrain : MonoBehaviour
 
     public GameObject dealerWinText;
     public GameObject playerWinText;
+    public GameObject drawText;
+    public GameObject foldButton;
 
+    public float dealerCountDown;
 
     //public int cardValue;
 
@@ -26,10 +31,11 @@ public class DealerBrain : MonoBehaviour
     {
         Dealing,
         Play,
+        Dealer,
         Fold
     }
 
-    List<PlayingCard> dealerCards;
+    public List<PlayingCard> dealerCards;
     public List<PlayingCard> playersCards;
 
 
@@ -42,10 +48,32 @@ public class DealerBrain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        if (currentState == State.Dealer)
+        {
+            if (dealerCountDown > 0)
+            {
+                dealerCountDown -= Time.deltaTime;
+                if (dealerCountDown <= 0)
+                {
+                    //make it when the card is on the players table make the dealer put a card on their table
+                    if (GetTotalDealerValue() < 15)
+                    {
+                        cardSpawner.SpawnCard();
+                        //put card in dealers list
+                        dealerCards.Add(cardSpawner.holdingCard);
+
+                        //move it to dealers table
+                        cardSpawner.holdingCard.transform.position = NextDealerCardPos();
+                    }
+
+                    if (CheckForWin() == false) // this could cause a win/loss if either player is over 21
+                        ChangeState(State.Fold); // this will compare totals if nothj <=21
+                }
+            }
+        }
     }
 
-    void ChangeState(State newState)
+    public void ChangeState(State newState)
     {
         currentState = newState;
 
@@ -56,27 +84,53 @@ public class DealerBrain : MonoBehaviour
             SpawnBeginnerCards();
 
 
-            //if the two cards are equal to 21 then call fold state
-            if (GetTotalValue() >= 21)
-            {
-                ChangeState(State.Fold);
-                Win();
-            }
-            else
+            if (CheckForWin() == false)
             {
                 ChangeState(State.Play);
             }
         }
+        if (currentState == State.Dealer)
+            dealerCountDown = 2.0f;
+
+        if (currentState == State.Fold)
+        {
+            //evaluate both players to see who wins
+            if (GetTotalDealerValue() > GetTotalPlayerValue() && GetTotalDealerValue() <= 21)
+                Lose();
+
+            else if (GetTotalPlayerValue() > GetTotalDealerValue() && GetTotalPlayerValue() <= 21)
+                Win();
+
+            else if (GetTotalDealerValue() == GetTotalPlayerValue() && GetTotalDealerValue() <= 21)
+                Draw();
+        }
     }
 
-    void SpawnBeginnerCards()
+    public bool CheckForWin()
+    {
+        if (GetTotalDealerValue() > 21)
+        {
+            ChangeState(State.Fold);
+            Win();
+            return true;
+        }
+        else if (GetTotalPlayerValue() > 21)
+        {
+            ChangeState(State.Fold);
+            Lose();
+            return true;
+        }
+        return false;
+    }
+
+    public void SpawnBeginnerCards()
     {
         dealerCards = new List<PlayingCard>();
 
         //deals two cards to dealer
         cardSpawner.Shuffle();
-        GameObject s1 = Instantiate(cardSpawner.card, spawn1.transform.position, Quaternion.Euler(-87, 271, -86));
-        GameObject s2 = Instantiate(cardSpawner.card, spawn2.transform.position, Quaternion.Euler(-87, 271, -86));
+        GameObject s1 = Instantiate(cardSpawner.card, dealerCardSpawns[0].transform.position, Quaternion.Euler(-87, 271, -86));
+        GameObject s2 = Instantiate(cardSpawner.card, dealerCardSpawns[1].transform.position, Quaternion.Euler(-87, 271, -86));
 
         PlayingCard playingCard1 = s1.GetComponent<PlayingCard>();
         PlayingCard playingCard2 = s2.GetComponent<PlayingCard>();
@@ -113,10 +167,10 @@ public class DealerBrain : MonoBehaviour
         playersCards.Add(_playingCard2);
     }
 
-    public int GetTotalValue()
+    public int GetTotalDealerValue()
     {
         int total = 0;
-        foreach(PlayingCard playingCard in dealerCards)
+        foreach (PlayingCard playingCard in dealerCards)
         {
             total += playingCard.GetCardValue();
         }
@@ -124,45 +178,45 @@ public class DealerBrain : MonoBehaviour
         return total;
     }
 
-    void Win()
+    public int GetTotalPlayerValue()
     {
-        //place some text saying wether the player has won or the dealer
-        if (currentState == State.Fold)
+        int total = 0;
+        foreach (PlayingCard playingCard in playersCards)
         {
-            //TODO make it also if total value is greater than player value
-            if (GetTotalValue() == 21)
-            {
-                //if dealer gets 21 place text saying dealer wins
-                dealerWinText.SetActive(true);
-            }
-            else if (GetTotalValue() > 21)
-            {
-                //dealer loses and player wins
-                playerWinText.SetActive(true);
-            }
+            total += playingCard.GetCardValue();
         }
+
+        return total;
     }
 
-    public Vector3 NextCardPos()
+    void Lose()
+    {
+        //if dealer gets 21 place text saying dealer wins
+        dealerWinText.SetActive(true);
+    }
+
+    void Win()
+    {
+        playerWinText.SetActive(true);
+    }
+
+    void Draw()
+    {
+        drawText.SetActive(true);
+    }
+
+    public Vector3 NextPlayerCardPos()
     {
         int nextpos = playersCards.Count - 1;
 
         //TODO go to spawn 4 once player has spawned 3
         return playerCardSpawns[nextpos].position;
     }
+    public Vector3 NextDealerCardPos()
+    {
+        int nextpos = dealerCards.Count - 1;
 
-    //void Playing()
-    //{
-    //    if (currentState == State.Play)
-    //    {
-    //        //add a function to add a card (hit) only after the player grabs a card
-    //        if (cardSpawner.grabCard == true)
-    //        {
-    //            cardSpawner.grabCard = false;
-    //            //dealerCards.Add(cardSpawner.card);
-    //        }
-
-    //        //otherwise swap to fold state
-    //    }
-    //}
+        //TODO go to spawn 4 once player has spawned 3
+        return dealerCardSpawns[nextpos].position;
+    }
 }
